@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StudentService from '../services/StudentService';
 
 function AddStudent(props) {
-  const [state, setState] = {
+  const [state, setState] = useState({
     id: '',
     name: '',
     grade: ''
-  };
+  });
 
   const idHandler = (event) => {
     setState({ ...state, id: event.target.value });
@@ -32,7 +32,7 @@ function AddStudent(props) {
     console.log(student);
     StudentService.createStudent(student)
       .then(res => {
-        this.props.history.push('/students');
+        props.history.push('/students');
       })
       .catch(err => {
         console.log('record not saved.');

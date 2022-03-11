@@ -9,9 +9,9 @@ function ViewStudent(props) {
 
   useEffect(() => {
     StudentService.getStudentById(state.id).then((res) => {
-      setState({ id, student: res.data });
+      setState({ id: state.id, student: res.data });
     });
-  }, []);
+  }, [state.id]);
 
   return (
     <div>
@@ -23,15 +23,15 @@ function ViewStudent(props) {
               <form>
                 <div className="form-group">
                   <label>Student ID: </label>
-                  <input placeholder={state.student.id} readOnly="true" name="id" className="form-control" />
+                  <input placeholder={state.student.id} readOnly={true} name="id" className="form-control" />
                 </div>
                 <div className="form-group">
                   <label>Student Name: </label>
-                  <input placeholder={state.student.name} name="name" className="form-control" />
+                  <input placeholder={state.student.name} readOnly={true} name="name" className="form-control" />
                 </div>
                 <div className="form-group">
                   <label>Student Grade: </label>
-                  <input placeholder={state.student.grade} name="grade" className="form-control" />
+                  <input placeholder={state.student.grade} readOnly={true} name="grade" className="form-control" />
                 </div>
               </form>
             </div>

@@ -12,13 +12,13 @@ function UpdateStudent(props) {
     StudentService.getStudentById(state.id).then((res) => {
       let student = res.data;
 
-      this.setState({
-        id,
+      setState({
+        id: state.id,
         name: student.name,
         grade: student.grade
       });
     });
-  }, []);
+  }, [state.id]);
 
   const idHandler = (event) => {
     setState({ ...state, id: event.target.value });
@@ -73,7 +73,7 @@ function UpdateStudent(props) {
                   <input placeholder="Grade" name="grade" className="form-control"
                     value={state.grade} onChange={gradeHandler} />
                 </div>
-                <button className="btn btn-success" onClick={saveStudent}> Update </button>
+                <button className="btn btn-success" onClick={updateStudent}> Update </button>
                 <button className="btn btn-danger" onClick={cancel}> Cancel </button>
               </form>
             </div>

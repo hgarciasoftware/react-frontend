@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import StudentService from '../services/StudentService';
 
 function ListStudents(props) {
-  const [students, setStudents] = useState([]);
+  const [state, setState] = useState({ students: [] });
 
   useEffect(() => {
     StudentService.getStudents().then((res) => {
-      setStudents(res.data);
+      setState({ students: res.data });
     });
   }, []);
 
@@ -47,8 +47,8 @@ function ListStudents(props) {
           </thead>
           <tbody>
             {
-              students.map(
-                student => {
+              state.students.map(
+                student =>
                   <tr key={student.id}>
                     <td>{student.id}</td>
                     <td>{student.name}</td>
@@ -59,7 +59,6 @@ function ListStudents(props) {
                       <button onClick={() => viewStudent(student.id)} className="btn btn-primary">View</button> 
                     </td>
                   </tr>
-                }
               )
             }
           </tbody>
