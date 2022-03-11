@@ -1,97 +1,80 @@
-import React, { Component } from 'react';
+import React from 'react';
 import StudentService from '../services/StudentService';
 
-class AddStudent extends Component {
-    constructor(props)
-    {
-        super(props)
-        this.state={
-           id: '',
-           name:'',
-           grade:''
-        }
-      
-        this.idHandler = this.idHandler.bind(this);
-        this.nameHandler = this.nameHandler.bind(this);
-        this.gradeHandler = this.gradeHandler.bind(this);
+function AddStudent(props) {
+  const [state, setState] = {
+    id: '',
+    name: '',
+    grade: ''
+  };
 
-    }//constructor
+  const idHandler = (event) => {
+    setState({ ...state, id: event.target.value });
+  };
 
-     
-    idHandler=(event) => {
-        this.setState({
-             id: event.target.value});
-    }
+  const nameHandler = (event) => {
+    setState({ ...state, name: event.target.value });
+  };
 
+  const gradeHandler = (event) => {
+    setState({ ...state, grade: event.target.value });
+  };
 
-    nameHandler=(event) => {
-        this.setState({
-           name: event.target.value});
-    }
+  const saveStudent = (e) => {
+    e.preventDefault();
 
-     
-    gradeHandler=(event) => {
-        this.setState({
-             grade: event.target.value});
-    }
+    let student = {
+      id: state.id,
+      name: state.name,
+      grade: state.grade
+    };
 
-    saveStudent = (e) => {
-        e.preventDefault();
-        let student={
-           id: this.state.id,
-           name: this.state.name,
-           grade: this.state.grade
-        };
-        console.log(student);
-        StudentService.createStudent(student).then(res =>{
-                this.props.history.push('/students');  
-            }).catch(err=>{
-                console.log("record not saved.");
-            });
-       
-       
-        
-        
-    }//closing save method
-
-    cancel(){
+    console.log(student);
+    StudentService.createStudent(student)
+      .then(res => {
         this.props.history.push('/students');
-    }
+      })
+      .catch(err => {
+        console.log('record not saved.');
+      });
+  }; // closing save method
 
-    render() {
-        return (
-            <div>
-               <div className="container">
-                   <div className="row">
-                      <div className="card col-md-6 offset-md-3 offset-md-3">
-                          <h3 className="text-center">Add Student</h3>
-                          <div className="card-body">
-                              <form>  
-                                  <div className="form-group">
-                                      <label>Student ID: </label>
-                                      <input placeholder="Id" name="id" className="form-control"
-                                         value={this.state.id} onChange={this.idHandler} />
-                                   </div>   
-                                   <div className="form-group">
-                                      <label>Student Name: </label>
-                                      <input placeholder="Name" name="name" className="form-control"
-                                         value={this.state.name} onChange={this.nameHandler} />
-                                   </div>   
-                                   <div className="form-group">
-                                      <label>Student Grade: </label>
-                                      <input placeholder="Grade" name="grade" className="form-control"
-                                         value={this.state.grade} onChange={this.gradeHandler} />
-                                   </div>   
-                                    <button className="btn btn-success" onClick={this.saveStudent}> Save </button>
-                                    <button className="btn btn-danger" onClick={this.cancel.bind(this)}> Cancel </button>                    
-                              </form>
-                          </div>
-                      </div>
-                   </div>
-               </div>
+  const cancel = () => {
+    props.history.push('/students');
+  };
+
+  return (
+    <div>
+      <div className="container">
+        <div className="row">
+          <div className="card col-md-6 offset-md-3 offset-md-3">
+            <h3 className="text-center">Add Student</h3>
+            <div className="card-body">
+              <form>
+                <div className="form-group">
+                  <label>Student ID: </label>
+                  <input placeholder="Id" name="id" className="form-control"
+                    value={state.id} onChange={idHandler} />
+                </div>
+                <div className="form-group">
+                  <label>Student Name: </label>
+                  <input placeholder="Name" name="name" className="form-control"
+                    value={state.name} onChange={nameHandler} />
+                </div>
+                <div className="form-group">
+                  <label>Student Grade: </label>
+                  <input placeholder="Grade" name="grade" className="form-control"
+                    value={state.grade} onChange={gradeHandler} />
+                </div>
+                <button className="btn btn-success" onClick={saveStudent}> Save </button>
+                <button className="btn btn-danger" onClick={cancel}> Cancel </button>
+              </form>
             </div>
-        );
-    }
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default AddStudent;
