@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import StudentService from '../services/StudentService';
 
-function ListStudents(props) {
+function ListStudents() {
   const [state, setState] = useState({ students: [] });
+  const navigate = useNavigate();
 
   useEffect(() => {
     StudentService.getStudents().then((res) => {
@@ -11,19 +13,19 @@ function ListStudents(props) {
   }, []);
 
   const addStudent = () => {
-    props.history.push('/add-student');
+    navigate('/add-student');
   };
 
   const editStudent = (id) => {
-    props.history.push(`/update-student/${id}`);
+    navigate(`/update-student/${id}`);
   };
 
   const deleteStudent = (id) => {
-    props.history.push(`/delete-student/${id}`);
+    navigate(`/delete-student/${id}`);
   };
 
   const viewStudent = (id) => {
-    props.history.push(`/view-student/${id}`);
+    navigate(`/view-student/${id}`);
   };
 
   return (

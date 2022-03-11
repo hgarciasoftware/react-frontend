@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import StudentService from '../services/StudentService';
 
-function AddStudent(props) {
+function AddStudent() {
   const [state, setState] = useState({
     id: '',
     name: '',
     grade: ''
   });
+
+  const navigate = useNavigate();
 
   const idHandler = (event) => {
     setState({ ...state, id: event.target.value });
@@ -32,7 +35,7 @@ function AddStudent(props) {
     console.log(student);
     StudentService.createStudent(student)
       .then(res => {
-        props.history.push('/students');
+        navigate('/students');
       })
       .catch(err => {
         console.log('record not saved.');
@@ -40,7 +43,7 @@ function AddStudent(props) {
   }; // closing save method
 
   const cancel = () => {
-    props.history.push('/students');
+    navigate('/students');
   };
 
   return (

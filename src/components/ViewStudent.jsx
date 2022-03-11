@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import StudentService from '../services/StudentService';
 
-function ViewStudent(props) {
+function ViewStudent() {
+  const { id } = useParams();
   const [state, setState] = useState({
-    id: props.match.params.id,
+    id: id,
     student: {}
   });
 

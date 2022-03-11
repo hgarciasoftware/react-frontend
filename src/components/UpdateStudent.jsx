@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import StudentService from '../services/StudentService';
 
-function UpdateStudent(props) {
+function UpdateStudent() {
+  const { id } = useParams();
   const [state, setState] = useState({
-    id: props.match.params.id,
+    id: id,
     name: '',
     grade: ''
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     StudentService.getStudentById(state.id).then((res) => {
@@ -42,12 +45,12 @@ function UpdateStudent(props) {
     };
 
     StudentService.updateStudent(student, state.id).then((res) => {
-      props.history.push('/students');
+      navigate('/students');
     });
   };
 
   const cancel = () => {
-    props.history.push('/students');
+    navigate('/students');
   };
 
   return (

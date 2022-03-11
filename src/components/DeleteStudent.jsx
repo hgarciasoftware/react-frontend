@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import StudentService from '../services/StudentService';
 
-function DeleteStudent(props) {
+function DeleteStudent() {
+  const { id } = useParams();
   const [state, setState] = useState({
-    id: props.match.params.id,
+    id: id,
     name: '',
     grade: ''
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     StudentService.getStudentById(state.id).then((res) =>{
@@ -31,12 +34,12 @@ function DeleteStudent(props) {
 
     console.log(student);
     StudentService.deleteStudent(state.id).then(res => {
-      props.history.push('/students');
+      navigate('/students');
     });
   };
 
   const cancel = () => {
-    props.history.push('/students');
+    navigate('/students');
   };
 
   return (
